@@ -83,5 +83,6 @@ public class Main extends WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started at port "+port);
+        setConnectionLostTimeout(1000);
     }
 }
