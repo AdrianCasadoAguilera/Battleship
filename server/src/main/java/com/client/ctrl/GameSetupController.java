@@ -19,6 +19,7 @@ import com.client.Main;
 import com.client.clientUtils.Position;
 import com.client.clientUtils.ShipPosition;
 import com.client.clientUtils.UtilsViews;
+import com.client.clientUtils.UtilsWS;
 
 public class GameSetupController {
 
@@ -32,6 +33,9 @@ public class GameSetupController {
     private boolean isHorizontal = true;  // Dirección del barco (horizontal o vertical)
     private final List<ShipPosition> placedShips = new ArrayList<>();  // Lista para guardar posiciones de barcos
     private final Set<Position> occupiedCells = new HashSet<>(); // Celdas ocupadas por los barcos colocados
+
+    private boolean areShipsPlaced = false;
+    private boolean areEnemyShipsPlaced = false;
 
     @FXML
     public void initialize() {
@@ -140,37 +144,21 @@ public class GameSetupController {
             BattleController battleController = (BattleController) UtilsViews.getController("gameView");
 
             // Pasa la disposición de los barcos a la vista de ataque
-            battleController.inicializarTablero(placedShips);
-
-            JSONObject obj = new JSONObject("{}");
-
-            obj.put("destination",Main.enemyId);
-            obj.put("type", "positions");
-
-            JSONObject msgObj = new JSONObject("{}");
-
-            for(int i = 0; i < placedShips.size(); i++){
-                ShipPosition ship = placedShips.get(i);
-                JSONObject shipObj = new JSONObject("{}");
-                for(int j = 0; j < ship.getPositions().size(); j++){
-                    Position pos = ship.getPositions().get(j);
-                    JSONObject shipPosObj = new JSONObject("{}");
-                    shipPosObj.put("col", pos.getCol());
-                    shipPosObj.put("row",pos.getRow());
-
-                    shipObj.put("pos"+String.valueOf(j+1),shipPosObj);
-                }
-                msgObj.put("ship"+String.valueOf(i+1), shipObj);
+            battleController.inicializarTablero(placedShips);  
+            
+            JSONObject objToSend = new JSONObject("{}");
+            objToSend.put("type","ships placed");
+            objToSend.put("enemyId",Main.enemyId);
+            Main.wsClient.safeSend(objToSend.toString());
+            
+            areShipsPlaced = true;
+            if(areEnemyShipsPlaced){
+                UtilsViews.setView("gameView");
             }
-
-            obj.put("message",msgObj.toString());
-            Main.wsClient.safeSend(obj.toString());          
-
-            UtilsViews.setView("gameView");
         }
     }
 
-    private boolean allShipsPlaced() {
+    public boolean allShipsPlaced() {
         // Verifica si todos los barcos (2, 3, 4 y 5) han sido colocados
         return placedShips.size() == 4;
     }
@@ -213,4 +201,10 @@ public class GameSetupController {
         }
     }
 
+    public void setEnemyShipsPlaced(){
+        areEnemyShipsPlaced = true;
+        if(areShipsPlaced){
+            UtilsViews.setView("gameView");
+        }
+    }
 }

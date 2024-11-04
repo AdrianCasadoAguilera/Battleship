@@ -85,9 +85,9 @@ public class Main extends Application {
                 }else if(msgObj.getString("type").equals("start game")){
                     enemyId = msgObj.getInt("enemyId");
                     UtilsViews.setView("putShipsView");
-                }else if(msgObj.getString("type").equals("enemy positions")){
-                    BattleController ctrl = (BattleController) UtilsViews.getController("gameView");
-                    ctrl.inicializarTableroEnemigo(msgObj.getString("message"));
+                }else if(msgObj.getString("type").equals("ships placed")){
+                    GameSetupController ctrl = (GameSetupController) UtilsViews.getController("putShipsView");
+                    ctrl.setEnemyShipsPlaced();
                 }
             });
         });

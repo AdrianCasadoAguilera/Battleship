@@ -178,12 +178,8 @@ public class Main extends WebSocketServer {
                 objToSend.put("enemyId",enemyId);
                 sendPrivateMessage(hostId, objToSend.toString(), conn);
             }
-        }else if(type.equals("positions")){
-            JSONObject objToSend = new JSONObject("{}");
-            objToSend.put("type", "enemy positions");
-            objToSend.put("message",obj.getString("message"));
-
-            sendPrivateMessage(obj.getInt("destination"), objToSend.toString(), conn);
+        }else if(type.equals("ships placed")){
+            sendPrivateMessage(obj.getInt("enemyId"), obj.toString(), conn);
         }
     }
 

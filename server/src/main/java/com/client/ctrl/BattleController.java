@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.client.Main;
+import com.client.clientUtils.UtilsViews;
 import com.client.clientUtils.Position;
 import com.client.clientUtils.ShipPosition;
 
@@ -76,6 +77,11 @@ public class BattleController {
     }
 
     public void inicializarTableroEnemigo(String placedShipsString) {
+        GameSetupController ctrl = (GameSetupController) UtilsViews.getController("putShipsView");
+        if(ctrl.allShipsPlaced()){
+            UtilsViews.setView("gameView");
+        }
+
         int colorIndex = 0;
 
         List<ShipPosition> placedShips = parseShipPositions(placedShipsString);
@@ -90,6 +96,7 @@ public class BattleController {
                 System.out.println("row: "+row+", col: "+col);
                 
                 Label celda = (Label) enemyBoard.getChildren().get(row * 10 + col);
+                System.out.println(celda);
                 celda.setStyle("-fx-background-color: " + shipColors[colorIndex] + "; -fx-border-color: black;");
             }
 
