@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.client.ctrl.GameSetupController">
+
+    <!-- Main content -->
+    <center>
+        <!-- StackPane para centrar la cuadrícula de manera precisa -->
+        <StackPane alignment="CENTER" maxWidth="400" maxHeight="400">
+            <!-- 10x10 Grid for the battlefield -->
+            <GridPane fx:id="battleGrid" hgap="1" vgap="1" style="-fx-background-color: lightblue; -fx-border-color: black;">
+                <children>
+                <!-- Celdas de la cuadrícula 10x10, cada una de 40x40 píxeles -->
+                <!-- Primera fila (rowIndex=0) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="0" GridPane.columnIndex="9"/>
+                
+                <!-- Segunda fila (rowIndex=1) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="1" GridPane.columnIndex="9"/>
+                
+                <!-- Tercera fila (rowIndex=2) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="2" GridPane.columnIndex="9"/>
+
+                <!-- Cuarta fila (rowIndex=3) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="3" GridPane.columnIndex="9"/>
+
+                <!-- Quinta fila (rowIndex=4) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="4" GridPane.columnIndex="9"/>
+
+                <!-- Sexta fila (rowIndex=5) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="5" GridPane.columnIndex="9"/>
+
+                <!-- Séptima fila (rowIndex=6) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="6" GridPane.columnIndex="9"/>
+
+                <!-- Octava fila (rowIndex=7) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="7" GridPane.columnIndex="9"/>
+
+                <!-- Novena fila (rowIndex=8) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="8" GridPane.columnIndex="9"/>
+
+
+                <!-- Última fila (rowIndex=9) -->
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="2"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="4"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="5"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="6"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="7"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="8"/>
+                <Label prefWidth="40" prefHeight="40" style="-fx-border-color: black; -fx-background-color: white;" GridPane.rowIndex="9" GridPane.columnIndex="9"/>
+            </children>
+        </GridPane>
+    </StackPane>
+</center>
+
+<!-- Right sidebar for ships selection -->
+<right>
+    <VBox spacing="20" alignment="CENTER">
+        <Label text="Select Ships" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <!-- Ships for dragging, with sizes that match the board cells -->
+        <HBox fx:id="ship2" style="-fx-border-color: black; -fx-background-color: lightgrey;" prefWidth="80" prefHeight="40" alignment="CENTER">
+            <Label text="Ship (2)" />
+        </HBox>
+        <HBox fx:id="ship3" style="-fx-border-color: black; -fx-background-color: lightgrey;" prefWidth="120" prefHeight="40" alignment="CENTER">
+            <Label text="Ship (3)" />
+        </HBox>
+        <HBox fx:id="ship4" style="-fx-border-color: black; -fx-background-color: lightgrey;" prefWidth="160" prefHeight="40" alignment="CENTER">
+            <Label text="Ship (4)" />
+        </HBox>
+        <HBox fx:id="ship5" style="-fx-border-color: black; -fx-background-color: lightgrey;" prefWidth="200" prefHeight="40" alignment="CENTER">
+            <Label text="Ship (5)" />
+        </HBox>
+    </VBox>
+</right>
+</BorderPane>
