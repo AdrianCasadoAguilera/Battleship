@@ -1,4 +1,9 @@
+com\client\controllers\LoginController.class
+com\client\data\GameData.class
 com\client\Main.class
+com\client\UtilsViews.class
+com\client\controllers\ChooseController.class
 com\client\UtilsWS.class
+com\client\controllers\LobbyController.class
 com\client\CtrlSockets.class
 com\client\UtilsWS$1.class

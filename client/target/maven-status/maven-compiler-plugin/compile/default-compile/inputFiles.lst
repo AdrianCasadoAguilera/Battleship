@@ -1,3 +1,8 @@
-D:\GitHub\Battleship\client\src\main\java\com\client\Main.java
-D:\GitHub\Battleship\client\src\main\java\com\client\UtilsWS.java
-D:\GitHub\Battleship\client\src\main\java\com\client\CtrlSockets.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\UtilsViews.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\Main.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\data\GameData.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\CtrlSockets.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\controllers\ChooseController.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\controllers\LobbyController.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\UtilsWS.java
+C:\Users\HP\Documents\GitHub\Battleship\client\src\main\java\com\client\controllers\LoginController.java

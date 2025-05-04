@@ -11,6 +11,11 @@ import java.util.function.Consumer;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONObject;
+
+import com.client.controllers.LobbyController;
+
+import javafx.application.Platform;
 
 public class UtilsWS {
 
@@ -23,19 +28,25 @@ public class UtilsWS {
     private String location = "";
     private static AtomicBoolean exitRequested = new AtomicBoolean(false);
     private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private String clientName = null;
 
-    private UtilsWS(String location) {
+    private UtilsWS(String location, String name) {
         this.location = location;
-        createNewWebSocketClient();
+        createNewWebSocketClient(name);
     }
 
-    private void createNewWebSocketClient() {
+    private void createNewWebSocketClient(String name) {
         try {
             this.client = new WebSocketClient(new URI(location), new Draft_6455()) {
                 @Override
                 public void onOpen(ServerHandshake handshake) {
                     String message = "WS connected to: " + getURI();
                     System.out.println(message);
+
+                    clientName = name;
+                    
+                    client.send("{\"type\":\"register\",\"name\":\""+name+"\"}");
+
                     if (onOpenCallBack != null) {
                         onOpenCallBack.accept(message);
                     }
@@ -45,6 +56,28 @@ public class UtilsWS {
                 public void onMessage(String message) {
                     if (onMessageCallBack != null) {
                         onMessageCallBack.accept(message);
+                    }
+                    System.out.println("WS message: " + message);
+                    JSONObject obj = new JSONObject(message);
+                    if (obj.has("type")) {
+                        String type = obj.getString("type");
+                        switch (type) {
+                            case "starting":
+                                System.out.println("Received starting message");
+                                LobbyController lobbyController = (LobbyController) UtilsViews.getController("lobby");
+                                lobbyController.startWaiting();
+                                break;
+                            case "start":
+                                System.out.println("Game started");
+                                Platform.runLater(() -> {
+                                    UtilsViews.setView("choose");
+                                });
+                                break;
+                            default:
+                                System.out.println("WS unknown message type: " + type);
+                        }
+                    } else {
+                        System.out.println("WS unknown message format: " + message);
                     }
                 }
 
@@ -95,12 +128,12 @@ public class UtilsWS {
         if (client != null) {
             client.close();
         }
-        createNewWebSocketClient();
+        createNewWebSocketClient(clientName);
     }
 
-    public static UtilsWS getSharedInstance(String location) {
+    public static UtilsWS getSharedInstance(String location, String name) {
         if (sharedInstance == null) {
-            sharedInstance = new UtilsWS(location);
+            sharedInstance = new UtilsWS(location, name);
         }
         return sharedInstance;
     }

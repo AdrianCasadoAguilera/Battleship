@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchor" minHeight="500.0" minWidth="600.0" style="-fx-background-color: #0e012b;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.controllers.LobbyController">
+   <children>
+      <VBox alignment="CENTER" layoutX="146.0" layoutY="86.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fx:id="playerName" fill="#b4b4b4" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+               <font>
+                  <Font name="Frank Ruehl CLM Bold" size="64.0" />
+               </font>
+            </Text>
+            <VBox prefHeight="34.0" prefWidth="600.0" />
+            <Text fx:id="waitingText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting to start...">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

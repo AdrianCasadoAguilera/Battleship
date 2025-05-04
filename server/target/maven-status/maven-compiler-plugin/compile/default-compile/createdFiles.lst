@@ -1,14 +1,1 @@
-com\client\ctrl\SearchingPlayersController.class
 com\server\Main.class
-com\client\clientUtils\UtilsViews.class
-com\client\Main.class
-com\client\clientUtils\Position.class
-com\client\ctrl\GameSetupController.class
-com\client\clientUtils\ShipPosition.class
-com\client\clientUtils\UtilsWS$1.class
-com\server\ShipPosition.class
-com\client\ctrl\BattleController.class
-com\client\clientUtils\CustomPopUp.class
-com\client\ctrl\StartController.class
-com\client\clientUtils\UtilsWS.class
-com\server\Position.class
