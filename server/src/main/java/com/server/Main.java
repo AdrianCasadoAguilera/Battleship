@@ -26,6 +26,8 @@ import org.java_websocket.exceptions.WebsocketNotConnectedException;
 public class Main extends WebSocketServer {
 
     private Map<WebSocket, String> clients;
+    private Map<String, WebSocket> nameToSocket = new ConcurrentHashMap<>();
+    private String currentPlayer = null;
 
     public Main(InetSocketAddress address) {
         super(address);
@@ -41,6 +43,7 @@ public class Main extends WebSocketServer {
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         String clientName = clients.get(conn);
         clients.remove(conn);
+        nameToSocket.remove(clientName);
         System.out.println("WebSocket client disconnected: " + clientName);
         sendClientsList();
     }
@@ -56,106 +59,119 @@ public class Main extends WebSocketServer {
                 case "register":
                     String name = obj.getString("name");
                     clients.put(conn, name);
+                    nameToSocket.put(name, conn);
+                    GameData.getInstance().addPlayer(name);
                     System.out.println("Client registered: " + name);
                     sendClientsList();
 
-                    if(clients.size() == 2) {
+                    if (clients.size() == 2) {
                         JSONObject rst = new JSONObject();
                         rst.put("type", "starting");
                         rst.put("message", "5s to start");
 
                         for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
-                            try {
-                                entry.getKey().send(rst.toString());
-                            } catch (WebsocketNotConnectedException e) {
-                                System.out.println("Client " + entry.getValue() + " not connected.");
-                                clients.remove(entry.getKey());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            sendSafely(entry.getKey(), rst);
                         }
 
-                        rst.clear();
-
                         ScheduledExecutorService timeout = Executors.newSingleThreadScheduledExecutor();
-
                         timeout.schedule(() -> {
-                            rst.put("type", "start");
-                            rst.put("message", "Game started");
+                            JSONObject start = new JSONObject();
+                            start.put("type", "start");
+                            start.put("message", "Game started");
                             for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
-                                try {
-                                    entry.getKey().send(rst.toString());
-                                } catch (WebsocketNotConnectedException e) {
-                                    System.out.println("Client " + entry.getValue() + " not connected.");
-                                    clients.remove(entry.getKey());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                sendSafely(entry.getKey(), start);
                             }
                         }, 5, TimeUnit.SECONDS);
                     }
                     break;
+
+                case "ready":
+                    if (clientName == null) return;
+
+                    if (obj.has("ships")) {
+                        JSONArray ships = obj.getJSONArray("ships");
+                        GameData.getInstance().setShips(clientName, ships);
+                        System.out.println("Player " + clientName + " is ready with ships: " + ships);
+
+                        if (GameData.getInstance().allPlayersReady(2)) {
+                            System.out.println("All players ready. Starting game.");
+
+                            JSONObject startGameMsg = new JSONObject();
+                            startGameMsg.put("type", "startGame");
+
+                            for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
+                                sendSafely(entry.getKey(), startGameMsg);
+                            }
+
+                            // Seleccionar jugador inicial aleatoriament
+                            String[] names = clients.values().toArray(new String[0]);
+                            currentPlayer = names[(int) (Math.random() * 2)];
+
+                            sendTurnInfo();
+                        }
+                    }
+                    break;
+
+                case "attack":
+                    if (!clientName.equals(currentPlayer)) {
+                        JSONObject err = new JSONObject();
+                        err.put("type", "error");
+                        err.put("message", "Not your turn!");
+                        sendSafely(conn, err);
+                        return;
+                    }
+
+                    String opponent = clients.values().stream()
+                        .filter(n -> !n.equals(clientName))
+                        .findFirst().orElse(null);
+
+
+                    if (opponent != null && nameToSocket.containsKey(opponent)) {
+                        JSONObject data = obj.getJSONObject("data");
+                        int row = data.getInt("row");
+                        int col = data.getInt("col");
+
+                        boolean hit = GameData.getInstance().isHit(opponent, row, col);
+
+                        // Envia resultat a ambdós jugadors
+                        JSONObject resultToAttacker = new JSONObject();
+                        resultToAttacker.put("type", "attackResult");
+                        resultToAttacker.put("row", row);
+                        resultToAttacker.put("col", col);
+                        resultToAttacker.put("hit", hit);
+
+                        JSONObject resultToDefender = new JSONObject(resultToAttacker.toString());
+                        resultToDefender.put("type", "gotAttacked");
+
+                        sendSafely(nameToSocket.get(clientName), resultToAttacker);
+                        sendSafely(nameToSocket.get(opponent), resultToDefender);
+                    }
+
+                    currentPlayer = opponent;
+                    sendTurnInfo();
+                    break;
+
                 default:
                     break;
             }
         }
     }
 
-    // Envia un mensaje a todos los clientes conectados
-    private void broadcastMessage(String message, WebSocket sender) {
-        for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
-            WebSocket conn = entry.getKey();
-            if (conn != sender) {
-                try {
-                    conn.send(message);
-                } catch (WebsocketNotConnectedException e) {
-                    System.out.println("Client " + entry.getValue() + " not connected.");
-                    clients.remove(conn);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    private void sendTurnInfo() {
+        for (Map.Entry<String, WebSocket> entry : nameToSocket.entrySet()) {
+            JSONObject msg = new JSONObject();
+            if (entry.getKey().equals(currentPlayer)) {
+                msg.put("type", "yourTurn");
+            } else {
+                msg.put("type", "opponentTurn");
             }
+            sendSafely(entry.getValue(), msg);
         }
     }
 
-    // Envia un mensaje al cliente especificado
-    private void sendPrivateMessage(String destination, String message, WebSocket senderConn) {
-        boolean found = false;
-
-        for (Map.Entry<WebSocket, String> entry : clients.entrySet()) {
-            if (entry.getValue().equals(destination)) {
-                found = true;
-                try {
-                    entry.getKey().send(message);
-                    JSONObject confirmation = new JSONObject();
-                    confirmation.put("type", "confirmation");
-                    confirmation.put("message", "Message sent to " + destination);
-                    senderConn.send(confirmation.toString());
-                } catch (WebsocketNotConnectedException e) {
-                    System.out.println("Client " + destination + " not connected.");
-                    clients.remove(entry.getKey());
-                    notifySenderClientUnavailable(senderConn, destination);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
-        }
-
-        if (!found) {
-            System.out.println("Client " + destination + " not found.");
-            notifySenderClientUnavailable(senderConn, destination);
-        }
-    }
-
-    // Envia error de cliente no conectado
-    private void notifySenderClientUnavailable(WebSocket sender, String destination) {
-        JSONObject rst = new JSONObject();
-        rst.put("type", "error");
-        rst.put("message", "Client " + destination + " not available.");
-
+    private void sendSafely(WebSocket socket, JSONObject msg) {
         try {
-            sender.send(rst.toString());
+            socket.send(msg.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -178,14 +194,7 @@ public class Main extends WebSocketServer {
             rst.put("id", clientName);
             rst.put("list", clientList);
 
-            try {
-                conn.send(rst.toString());
-            } catch (WebsocketNotConnectedException e) {
-                System.out.println("Client " + clientName + " not connected.");
-                iterator.remove();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            sendSafely(conn, rst);
         }
     }
 
@@ -217,42 +226,35 @@ public class Main extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        int port = 3000; 
+        int port = 3000;
         Main server = new Main(new InetSocketAddress(port));
         server.start();
 
-        // Permet aturar el servidor amb SITERM/SIGINT
         setSignTerm(server);
 
         LineReader reader = LineReaderBuilder.builder().build();
-
         System.out.println("Server running. Type 'exit' to gracefully stop it.");
 
         try {
             while (true) {
-                String line = null;
+                String line;
                 try {
                     line = reader.readLine("> ");
-                } catch (UserInterruptException e) {
-                    continue;
-                } catch (EndOfFileException e) {
+                } catch (UserInterruptException | EndOfFileException e) {
                     break;
                 }
 
                 line = line.trim();
-
                 if (line.equalsIgnoreCase("exit")) {
                     System.out.println("Stopping server...");
-                    try {
-                        server.stop(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    server.stop(1000);
                     break;
                 } else {
                     System.out.println("Unknown command. Type 'exit' to stop server gracefully.");
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             System.out.println("Server stopped.");
         }

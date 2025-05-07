@@ -30,6 +30,7 @@ public class Main extends Application {
         UtilsViews.addView(getClass(), "login", "/assets/layouts/login.fxml");
         UtilsViews.addView(getClass(), "lobby", "/assets/layouts/lobby.fxml");
         UtilsViews.addView(getClass(), "choose", "/assets/layouts/choose.fxml");
+        UtilsViews.addView(getClass(), "game", "/assets/layouts/game.fxml");
 
         loginController = (LoginController) UtilsViews.getController("Login");
         lobbyController = (LobbyController) UtilsViews.getController("Lobby");

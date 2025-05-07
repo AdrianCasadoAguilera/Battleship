@@ -13,6 +13,7 @@ import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
+import com.client.controllers.GameController;
 import com.client.controllers.LobbyController;
 
 import javafx.application.Platform;
@@ -44,8 +45,7 @@ public class UtilsWS {
                     System.out.println(message);
 
                     clientName = name;
-                    
-                    client.send("{\"type\":\"register\",\"name\":\""+name+"\"}");
+                    client.send("{\"type\":\"register\",\"name\":\"" + name + "\"}");
 
                     if (onOpenCallBack != null) {
                         onOpenCallBack.accept(message);
@@ -71,6 +71,32 @@ public class UtilsWS {
                                 System.out.println("Game started");
                                 Platform.runLater(() -> {
                                     UtilsViews.setView("choose");
+                                });
+                                break;
+                            case "startGame":
+                                System.out.println("Game started");
+                                Platform.runLater(() -> {
+                                    UtilsViews.setView("game");
+                                    GameController gameController = (GameController) UtilsViews.getController("game");
+                                    gameController.initialize();
+                                });
+                                break;
+                            case "attackResult":
+                                Platform.runLater(() -> {
+                                    GameController controller = (GameController) UtilsViews.getController("game");
+                                    int row = obj.getInt("row");
+                                    int col = obj.getInt("col");
+                                    boolean hit = obj.getBoolean("hit");
+                                    controller.handleAttackResult(row, col, hit);
+                                });
+                                break;
+                            case "gotAttacked":
+                                Platform.runLater(() -> {
+                                    GameController controller = (GameController) UtilsViews.getController("game");
+                                    int row = obj.getInt("row");
+                                    int col = obj.getInt("col");
+                                    boolean hit = obj.getBoolean("hit");
+                                    controller.handleGotAttacked(row, col, hit);
                                 });
                                 break;
                             default:

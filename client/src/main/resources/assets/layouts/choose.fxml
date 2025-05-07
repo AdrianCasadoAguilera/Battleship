@@ -47,7 +47,7 @@
             <!-- Botón inferior -->
             <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" text="Start" />
+                  <Button mnemonicParsing="false" onAction="#startGame" prefHeight="26.0" prefWidth="69.0" text="Start" />
                   <HBox prefHeight="0.0" prefWidth="39.0" />
                   <Text fx:id="readyText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Start" wrappingWidth="116.79998779296875">
                      <font>
@@ -61,7 +61,7 @@
       </VBox>
 
       <!-- Capa de arrastre encima de todo -->
-      <Pane fx:id="dragLayer" pickOnBounds="false" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Pane fx:id="dragLayer" pickOnBounds="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
    </children>
 </AnchorPane>

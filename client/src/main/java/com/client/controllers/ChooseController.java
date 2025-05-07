@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.client.UtilsWS;
 import com.client.data.GameData;
 
 import javafx.fxml.FXML;
@@ -11,7 +12,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -153,9 +153,6 @@ public class ChooseController {
                     return;
                 }
 
-                double sceneX = event.getScreenX();
-                double sceneY = event.getScreenY();
-
                 Point2D canvasScenePos = canvas.localToScene(0, 0);
                 Point2D canvasInMain = mainPane.sceneToLocal(canvasScenePos);
 
@@ -219,4 +216,43 @@ public class ChooseController {
         }
         return false;
     }
+
+    @FXML
+    private void startGame() {
+        // Construir JSON amb les posicions dels vaixells
+        org.json.JSONArray shipsArray = new org.json.JSONArray();
+        ArrayList<org.json.JSONObject> localShips = new ArrayList<>();
+
+        for (Map.Entry<Rectangle, int[]> entry : placedShips.entrySet()) {
+            Rectangle ship = entry.getKey();
+            int[] position = entry.getValue();
+            int row = position[0];
+            int col = position[1];
+            int size = shipSizes.get(ship);
+            boolean isHorizontal = shipHorizontal.get(ship);
+
+            org.json.JSONObject shipObj = new org.json.JSONObject();
+            shipObj.put("row", row);
+            shipObj.put("col", col);
+            shipObj.put("size", size);
+            shipObj.put("orientation", isHorizontal ? "H" : "V");
+
+            shipsArray.put(shipObj);
+            localShips.add(shipObj);
+        }
+
+        // Guarda a GameData per a la següent vista
+        GameData.getInstance().setMyShips(localShips);
+
+        // Missatge per al servidor
+        org.json.JSONObject readyMessage = new org.json.JSONObject();
+        readyMessage.put("type", "ready");
+        readyMessage.put("ships", shipsArray);
+
+        UtilsWS.getSharedInstance("", "").safeSend(readyMessage.toString());
+
+        mainPane.setDisable(true);
+    }
+
+
 }
